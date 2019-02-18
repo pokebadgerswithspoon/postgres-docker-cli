@@ -7,9 +7,17 @@
 PROCEED=${1:-"no"}
 
 DIR=`dirname $0`
-PID_DIR=$DIR/.pid
+#PID_DIR=
 ENV_FILE=$DIR/docker.env
 MOUNTS="-v /run/postgresql/:/run/postgresql/"
+
+if [ -z $XDG_DATA_HOME ]; then
+  XDG_DATA_HOME=$HOME/.local/.share
+fi
+
+if [ -z $PID_DIR ]; then
+  PID_DIR=$XDG_DATA_HOME/protgres-runme
+fi
 
 function join_by { local IFS="$1"; shift; echo "$*"; }
 
